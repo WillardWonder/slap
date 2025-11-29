@@ -685,6 +685,8 @@
     }
 
     // --- ART DRAWING ---
+    const charList = document.getElementById('char-list');
+
     function renderProfile(c, char, w, h) {
         c.fillStyle = "#333"; c.fillRect(0,0,w,h);
         let grad = c.createRadialGradient(w/2, h/2, 10, w/2, h/2, 50);
