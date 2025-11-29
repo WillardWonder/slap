@@ -52,21 +52,22 @@
         .hud-top {
             display: flex;
             justify-content: space-between;
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            pointer-events: none;
         }
 
         .p-card { 
-            width: 30%; 
+            width: 35%; 
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
         
         .profile-pic {
-            width: 60px; height: 60px;
+            width: 50px; height: 50px;
             background: #222;
-            border: 3px solid #fff;
+            border: 2px solid #fff;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             border-radius: 5px;
@@ -76,27 +77,38 @@
 
         .stat-block { flex-grow: 1; min-width: 0; }
 
-        .name { font-size: 1.5vw; margin-bottom: 5px; text-shadow: 2px 2px 0 #000; color: #fff; font-family: 'Black Ops One'; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .hp-bar-bg { width: 100%; height: 20px; background: #330000; border: 2px solid #555; position: relative; transform: skew(-10deg); }
+        .name { 
+            font-size: 14px; 
+            margin-bottom: 4px; 
+            text-shadow: 2px 2px 0 #000; 
+            color: #fff; 
+            font-family: 'Black Ops One'; 
+            letter-spacing: 1px; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
+        .hp-bar-bg { width: 100%; height: 12px; background: #330000; border: 2px solid #555; position: relative; transform: skew(-10deg); }
         .hp-bar-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #00ff00, #00aa00); transition: width 0.2s; }
         
         #turn-indicator {
-            position: absolute; top: 20%; width: 100%; text-align: center;
-            font-family: 'Black Ops One'; font-size: 5vw; color: #ffff00; 
+            position: absolute; top: 25%; width: 100%; text-align: center;
+            font-family: 'Black Ops One'; font-size: 30px; color: #ffff00; 
             text-shadow: 0 0 10px #ffaa00, 3px 3px 0 #000;
             opacity: 0; transition: opacity 0.2s; pointer-events: none;
         }
 
-        /* METER */
+        /* METER - Moved up to avoid button */
         #meter-container {
-            position: absolute; bottom: 15%; left: 50%;
+            position: absolute; bottom: 120px; left: 50%;
             transform: translateX(-50%);
-            width: 60%; height: 8%;
-            background: #222; border: 4px solid #fff;
+            width: 70%; height: 40px;
+            background: #222; border: 3px solid #fff;
             display: none;
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            z-index: 10;
         }
 
         .zone-ok { position: absolute; left: 0; width: 100%; height: 100%; background: #550000; } 
@@ -108,22 +120,24 @@
         
         #needle {
             position: absolute; left: 0; top: -5px; bottom: -5px;
-            width: 8px; background: #fff; border: 2px solid #000;
+            width: 6px; background: #fff; border: 2px solid #000;
             transform: translateX(-50%);
             z-index: 10;
         }
 
+        /* ACTION BUTTON - Smaller and fixed size */
         #action-btn {
-            position: absolute; bottom: 5%; left: 50%;
+            position: absolute; bottom: 30px; left: 50%;
             transform: translateX(-50%);
             padding: 15px 40px;
-            background: #0044aa; color: white; border: 4px solid white;
-            font-family: 'Black Ops One'; font-size: 4vw;
-            border-radius: 10px; cursor: pointer; pointer-events: auto;
+            background: #0044aa; color: white; border: 3px solid white;
+            font-family: 'Black Ops One'; font-size: 24px;
+            border-radius: 8px; cursor: pointer; pointer-events: auto;
             display: none; animation: pulse 0.5s infinite alternate;
             text-shadow: 2px 2px 0 #000;
             box-shadow: 0 6px 0 #002266;
             white-space: nowrap;
+            z-index: 20;
         }
         #action-btn:active { transform: translateX(-50%) translateY(4px); box-shadow: 0 2px 0 #002266; }
         @keyframes pulse { from{transform:translateX(-50%) scale(1);} to{transform:translateX(-50%) scale(1.05);} }
@@ -131,11 +145,11 @@
         #announcer {
             position: absolute; top: 40%; left: 50%;
             transform: translate(-50%, -50%);
-            font-family: 'Black Ops One'; font-size: 10vw;
+            font-family: 'Black Ops One'; font-size: 60px;
             color: white; text-align: center;
             text-shadow: 5px 5px 0 #000, -2px -2px 0 #ff0000;
             opacity: 0; pointer-events: none; white-space: nowrap;
-            z-index: 20;
+            z-index: 30;
         }
 
         /* MENUS */
@@ -145,38 +159,39 @@
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             z-index: 100; pointer-events: auto;
+            padding: 20px; box-sizing: border-box;
         }
         .title { 
-            font-family: 'Black Ops One'; font-size: 8vw; color: #ffcc00; 
+            font-family: 'Black Ops One'; font-size: 50px; color: #ffcc00; 
             margin-bottom: 20px; text-align: center; text-shadow: 0 5px 0 #550000;
             line-height: 1.1;
         }
         .menu-btn {
-            padding: 15px 30px; font-family: 'Press Start 2P'; font-size: 16px;
-            background: #cc0000; color: white; border: 4px solid #fff; cursor: pointer;
-            margin-top: 20px; box-shadow: 0 10px 0 #550000; transition: transform 0.1s;
-            width: 80%; max-width: 300px; text-align: center;
+            padding: 12px 20px; font-family: 'Press Start 2P'; font-size: 14px;
+            background: #cc0000; color: white; border: 3px solid #fff; cursor: pointer;
+            margin-top: 15px; box-shadow: 0 6px 0 #550000; transition: transform 0.1s;
+            width: 260px; text-align: center;
         }
-        .menu-btn:active { transform: translateY(10px); box-shadow: none; }
+        .menu-btn:active { transform: translateY(6px); box-shadow: none; }
 
         .char-select { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .char-icon { 
-            width: 80px; height: 80px; border: 4px solid #444; 
+            width: 70px; height: 70px; border: 3px solid #444; 
             cursor: pointer; display: flex; justify-content: center; align-items: center;
             background: #222; transition: 0.2s; position: relative;
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         .char-icon canvas { width: 100%; height: 100%; }
-        .char-icon.selected { border-color: #ffcc00; background: #555; transform: scale(1.1); box-shadow: 0 0 20px #ffcc00; }
+        .char-icon.selected { border-color: #ffcc00; background: #555; transform: scale(1.1); box-shadow: 0 0 15px #ffcc00; }
         
         #room-code-input {
-            margin-top: 10px; padding: 10px; font-size: 20px; text-transform: uppercase;
-            text-align: center; font-family: 'Black Ops One'; width: 150px;
+            margin-top: 10px; padding: 10px; font-size: 24px; text-transform: uppercase;
+            text-align: center; font-family: 'Black Ops One'; width: 180px; letter-spacing: 2px;
         }
 
-        .status-msg { margin-top: 20px; color: #aaa; font-size: 14px; text-align: center; line-height: 1.5; }
-        #room-display { position: absolute; top: 10px; right: 10px; color: #888; font-size: 10px; }
+        .status-msg { margin-top: 20px; color: #aaa; font-size: 12px; text-align: center; line-height: 1.5; min-height: 20px; }
+        #room-display { position: absolute; top: 10px; right: 10px; color: #888; font-size: 10px; font-family: monospace; }
         
         /* AUDIO BTN */
         #audio-toggle {
@@ -239,21 +254,23 @@
     <div id="menu-multi" class="menu-screen" style="display:none;">
         <div class="title">ONLINE LOBBY</div>
         
-        <div style="background: #333; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+        <div style="background: #333; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center; width: 100%; max-width: 280px;">
             <div style="font-size: 10px; color: #aaa;">YOU ARE PLAYING AS:</div>
-            <div id="selected-char-display" style="color: #ffcc00; font-family: 'Black Ops One';"></div>
+            <div id="selected-char-display" style="color: #ffcc00; font-family: 'Black Ops One'; font-size: 18px; margin-top: 5px;"></div>
         </div>
 
         <button class="menu-btn" onclick="findQuickMatch()">QUICK MATCH</button>
-        <div style="margin-top: 30px; display:flex; flex-direction:column; align-items: center;">
+        
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #444; width: 100%; max-width: 300px; display:flex; flex-direction:column; align-items: center;">
+            <div style="color:#888; font-size: 10px; margin-bottom: 5px;">PRIVATE ROOM CODE</div>
             <input type="text" id="room-code-input" placeholder="CODE" maxlength="4">
-            <div style="display:flex; gap:10px;">
-                <button class="menu-btn" style="width: 140px; font-size: 14px;" onclick="createPrivateRoom()">CREATE</button>
-                <button class="menu-btn" style="width: 140px; font-size: 14px;" onclick="joinPrivateRoom()">JOIN</button>
+            <div style="display:flex; gap:10px; width: 100%; justify-content: center;">
+                <button class="menu-btn" style="width: 120px; font-size: 12px; margin-top: 10px;" onclick="createPrivateRoom()">CREATE</button>
+                <button class="menu-btn" style="width: 120px; font-size: 12px; margin-top: 10px;" onclick="joinPrivateRoom()">JOIN</button>
             </div>
         </div>
         <div id="lobby-status" class="status-msg"></div>
-        <button class="menu-btn" style="background:#555; margin-top:40px; width: 200px;" onclick="backToMain()">BACK</button>
+        <button class="menu-btn" style="background:#555; margin-top:20px; width: 200px;" onclick="backToMain()">BACK</button>
     </div>
 </div>
 
