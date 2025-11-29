@@ -57,40 +57,41 @@
         }
 
         .p-card { 
-            width: 320px; 
+            width: 30%; 
             display: flex;
             gap: 10px;
             align-items: center;
         }
         
         .profile-pic {
-            width: 70px; height: 70px;
+            width: 60px; height: 60px;
             background: #222;
             border: 3px solid #fff;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             border-radius: 5px;
+            flex-shrink: 0;
         }
         .profile-pic canvas { width: 100%; height: 100%; }
 
-        .stat-block { flex-grow: 1; }
+        .stat-block { flex-grow: 1; min-width: 0; }
 
-        .name { font-size: 14px; margin-bottom: 5px; text-shadow: 2px 2px 0 #000; color: #fff; font-family: 'Black Ops One'; letter-spacing: 1px; }
+        .name { font-size: 1.5vw; margin-bottom: 5px; text-shadow: 2px 2px 0 #000; color: #fff; font-family: 'Black Ops One'; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .hp-bar-bg { width: 100%; height: 20px; background: #330000; border: 2px solid #555; position: relative; transform: skew(-10deg); }
         .hp-bar-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #00ff00, #00aa00); transition: width 0.2s; }
         
         #turn-indicator {
-            position: absolute; top: 110px; width: 100%; text-align: center;
-            font-family: 'Black Ops One'; font-size: 40px; color: #ffff00; 
+            position: absolute; top: 20%; width: 100%; text-align: center;
+            font-family: 'Black Ops One'; font-size: 5vw; color: #ffff00; 
             text-shadow: 0 0 10px #ffaa00, 3px 3px 0 #000;
-            opacity: 0; transition: opacity 0.2s;
+            opacity: 0; transition: opacity 0.2s; pointer-events: none;
         }
 
         /* METER */
         #meter-container {
-            position: absolute; bottom: 100px; left: 50%;
+            position: absolute; bottom: 15%; left: 50%;
             transform: translateX(-50%);
-            width: 500px; height: 50px;
+            width: 60%; height: 8%;
             background: #222; border: 4px solid #fff;
             display: none;
             border-radius: 25px;
@@ -113,15 +114,16 @@
         }
 
         #action-btn {
-            position: absolute; bottom: 30px; left: 50%;
+            position: absolute; bottom: 5%; left: 50%;
             transform: translateX(-50%);
-            padding: 20px 60px;
+            padding: 15px 40px;
             background: #0044aa; color: white; border: 4px solid white;
-            font-family: 'Black Ops One'; font-size: 30px;
+            font-family: 'Black Ops One'; font-size: 4vw;
             border-radius: 10px; cursor: pointer; pointer-events: auto;
             display: none; animation: pulse 0.5s infinite alternate;
             text-shadow: 2px 2px 0 #000;
             box-shadow: 0 6px 0 #002266;
+            white-space: nowrap;
         }
         #action-btn:active { transform: translateX(-50%) translateY(4px); box-shadow: 0 2px 0 #002266; }
         @keyframes pulse { from{transform:translateX(-50%) scale(1);} to{transform:translateX(-50%) scale(1.05);} }
@@ -129,10 +131,11 @@
         #announcer {
             position: absolute; top: 40%; left: 50%;
             transform: translate(-50%, -50%);
-            font-family: 'Black Ops One'; font-size: 80px;
+            font-family: 'Black Ops One'; font-size: 10vw;
             color: white; text-align: center;
             text-shadow: 5px 5px 0 #000, -2px -2px 0 #ff0000;
             opacity: 0; pointer-events: none; white-space: nowrap;
+            z-index: 20;
         }
 
         /* MENUS */
@@ -144,20 +147,21 @@
             z-index: 100; pointer-events: auto;
         }
         .title { 
-            font-family: 'Black Ops One'; font-size: 60px; color: #ffcc00; 
+            font-family: 'Black Ops One'; font-size: 8vw; color: #ffcc00; 
             margin-bottom: 20px; text-align: center; text-shadow: 0 5px 0 #550000;
+            line-height: 1.1;
         }
         .menu-btn {
-            padding: 20px 40px; font-family: 'Press Start 2P'; font-size: 20px;
+            padding: 15px 30px; font-family: 'Press Start 2P'; font-size: 16px;
             background: #cc0000; color: white; border: 4px solid #fff; cursor: pointer;
             margin-top: 20px; box-shadow: 0 10px 0 #550000; transition: transform 0.1s;
-            width: 300px; text-align: center;
+            width: 80%; max-width: 300px; text-align: center;
         }
         .menu-btn:active { transform: translateY(10px); box-shadow: none; }
 
-        .char-select { display: flex; gap: 15px; margin-bottom: 20px; }
+        .char-select { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .char-icon { 
-            width: 100px; height: 100px; border: 4px solid #444; 
+            width: 80px; height: 80px; border: 4px solid #444; 
             cursor: pointer; display: flex; justify-content: center; align-items: center;
             background: #222; transition: 0.2s; position: relative;
             overflow: hidden;
@@ -173,6 +177,14 @@
 
         .status-msg { margin-top: 20px; color: #aaa; font-size: 14px; text-align: center; line-height: 1.5; }
         #room-display { position: absolute; top: 10px; right: 10px; color: #888; font-size: 10px; }
+        
+        /* AUDIO BTN */
+        #audio-toggle {
+            position: absolute; top: 10px; left: 10px;
+            font-size: 20px; cursor: pointer; color: #555;
+            z-index: 101; pointer-events: auto;
+        }
+        #audio-toggle.on { color: #00ff00; }
     </style>
 </head>
 <body>
@@ -181,6 +193,7 @@
     <canvas id="gameCanvas"></canvas>
     
     <div id="ui-layer">
+        <div id="audio-toggle" onclick="toggleAudio()">🔇</div>
         <div id="room-display"></div>
         <div class="hud-top">
             <div class="p-card">
@@ -225,6 +238,12 @@
     <!-- MULTIPLAYER MENU -->
     <div id="menu-multi" class="menu-screen" style="display:none;">
         <div class="title">ONLINE LOBBY</div>
+        
+        <div style="background: #333; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+            <div style="font-size: 10px; color: #aaa;">YOU ARE PLAYING AS:</div>
+            <div id="selected-char-display" style="color: #ffcc00; font-family: 'Black Ops One';"></div>
+        </div>
+
         <button class="menu-btn" onclick="findQuickMatch()">QUICK MATCH</button>
         <div style="margin-top: 30px; display:flex; flex-direction:column; align-items: center;">
             <input type="text" id="room-code-input" placeholder="CODE" maxlength="4">
@@ -241,7 +260,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, updateDoc, query, where, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, doc, setDoc, getDoc, onSnapshot, updateDoc, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // --- YOUR FIREBASE CONFIG ---
     const firebaseConfig = {
@@ -258,6 +277,61 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    // --- SOUND ENGINE (Synth) ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let audioEnabled = false;
+
+    window.toggleAudio = () => {
+        audioEnabled = !audioEnabled;
+        const btn = document.getElementById('audio-toggle');
+        btn.innerText = audioEnabled ? "🔊" : "🔇";
+        btn.classList.toggle("on", audioEnabled);
+        if(audioEnabled && audioCtx.state === 'suspended') audioCtx.resume();
+    };
+
+    function playSound(type) {
+        if(!audioEnabled) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+        if(type === 'click') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(800, now);
+            osc.frequency.exponentialRampToValueAtTime(300, now + 0.1);
+            gain.gain.setValueAtTime(0.1, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.1);
+            osc.start(now); osc.stop(now + 0.1);
+        } else if (type === 'slap') {
+            // White noise burst for slap
+            const bufferSize = audioCtx.sampleRate * 0.2; // 0.2s noise
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+            
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            const noiseFilter = audioCtx.createBiquadFilter();
+            noiseFilter.type = 'lowpass';
+            noiseFilter.frequency.value = 1000;
+            noise.connect(noiseFilter);
+            noiseFilter.connect(gain);
+            
+            gain.gain.setValueAtTime(0.5, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+            noise.start(now);
+        } else if (type === 'crit') {
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(200, now);
+            osc.frequency.linearRampToValueAtTime(50, now + 0.5);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.linearRampToValueAtTime(0, now + 0.5);
+            osc.start(now); osc.stop(now + 0.5);
+        }
+    }
+
     // --- GAME STATE ---
     let user = null;
     let roomId = null;
@@ -269,34 +343,23 @@
     let currentState = STATE.MENU;
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = 800; canvas.height = 600;
+    
+    // Scale Canvas
+    function resizeGame() {
+        const container = document.getElementById('game-container');
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+        // Keep internal logic resolution at 800x600 for simplicity, use scale
+        ctx.scale(canvas.width / 800, canvas.height / 600);
+    }
+    window.addEventListener('resize', resizeGame);
+    // Initial size set later
 
-    // Advanced Character Config
     const CHARS = [
-        { 
-            name: "THE BOULDER", 
-            skin: "#d2a679", hair: "#3e2723", outfit: "#212121",
-            type: "muscular", pwr: 1.4, hp: 1.3,
-            traits: { bald: true, beard: true, muscle: 1.0, fat: 0.1, height: 1.0 }
-        },
-        { 
-            name: "BEANPOLE BEN", 
-            skin: "#f5d0b0", hair: "#e65100", outfit: "#1b5e20",
-            type: "skinny", pwr: 0.9, hp: 0.8,
-            traits: { bald: false, beard: false, muscle: 0.2, fat: 0.0, height: 1.3 }
-        },
-        { 
-            name: "BIG BARREL", 
-            skin: "#8d6e63", hair: "#000000", outfit: "#b71c1c",
-            type: "fat", pwr: 1.2, hp: 1.5,
-            traits: { bald: false, beard: true, muscle: 0.4, fat: 1.5, height: 0.9 }
-        },
-        { 
-            name: "TINY TIM", 
-            skin: "#ffccbc", hair: "#fdd835", outfit: "#0d47a1",
-            type: "small", pwr: 1.0, hp: 0.9,
-            traits: { bald: false, beard: false, muscle: 0.6, fat: 0.1, height: 0.85 }
-        }
+        { name: "THE BOULDER", skin: "#d2a679", hair: "#3e2723", outfit: "#212121", pwr: 1.4, hp: 1.3, traits: { bald: true, beard: true, muscle: 1.0, fat: 0.1, height: 1.0 } },
+        { name: "BEANPOLE BEN", skin: "#f5d0b0", hair: "#e65100", outfit: "#1b5e20", pwr: 0.9, hp: 0.8, traits: { bald: false, beard: false, muscle: 0.2, fat: 0.0, height: 1.3 } },
+        { name: "BIG BARREL", skin: "#8d6e63", hair: "#000000", outfit: "#b71c1c", pwr: 1.2, hp: 1.5, traits: { bald: false, beard: true, muscle: 0.4, fat: 1.5, height: 0.9 } },
+        { name: "TINY TIM", skin: "#ffccbc", hair: "#fdd835", outfit: "#0d47a1", pwr: 1.0, hp: 0.9, traits: { bald: false, beard: false, muscle: 0.6, fat: 0.1, height: 0.85 } }
     ];
 
     let myCharIdx = 0;
@@ -320,20 +383,35 @@
         document.getElementById('lobby-status').innerText = "Auth Failed: " + e.message;
     });
 
+    // Cleanup on close
+    window.addEventListener('beforeunload', () => {
+        if(roomId && isMultiplayer) {
+            // Best effort leave
+            const roomRef = doc(db, 'games', roomId);
+            if(isHost) deleteDoc(roomRef); // Host closes room
+            else updateDoc(roomRef, { status: 'abandoned' }); // Player leaves
+        }
+    });
+
     // --- MENU LOGIC ---
     window.backToMain = () => {
+        playSound('click');
         if(gameUnsubscribe) gameUnsubscribe();
         document.getElementById('menu-multi').style.display = 'none';
         document.getElementById('menu-main').style.display = 'flex';
         document.getElementById('lobby-status').innerText = "";
+        roomId = null;
     };
 
     window.showMultiplayerMenu = () => {
+        playSound('click');
         document.getElementById('menu-main').style.display = 'none';
         document.getElementById('menu-multi').style.display = 'flex';
+        document.getElementById('selected-char-display').innerText = CHARS[myCharIdx].name;
     };
 
     window.startSinglePlayer = () => {
+        playSound('click');
         document.getElementById('menu-main').style.display = 'none';
         isMultiplayer = false;
         startGameLocal();
@@ -341,6 +419,7 @@
 
     // --- MULTIPLAYER ROOMS ---
     window.createPrivateRoom = async () => {
+        playSound('click');
         if(!user) return;
         const code = generateRoomCode();
         roomId = code;
@@ -359,6 +438,7 @@
     };
 
     window.joinPrivateRoom = async () => {
+        playSound('click');
         if(!user) return;
         const code = document.getElementById('room-code-input').value.toUpperCase();
         if(code.length !== 4) return;
@@ -366,22 +446,34 @@
         const roomRef = doc(db, 'games', code);
         const snap = await getDoc(roomRef);
         
-        if(snap.exists() && snap.data().status === 'waiting') {
-            roomId = code;
-            isHost = false;
-            document.getElementById('lobby-status').innerText = "Joining...";
-            await updateDoc(roomRef, {
-                p2: user.uid,
-                p2Char: myCharIdx,
-                status: 'ready'
-            });
-            listenToGame(code);
+        if(snap.exists()) {
+            const data = snap.data();
+            if(data.status === 'waiting') {
+                if(data.p1 === user.uid) {
+                    document.getElementById('lobby-status').innerText = "Cannot join your own room!";
+                    return;
+                }
+                
+                roomId = code;
+                isHost = false;
+                document.getElementById('lobby-status').innerText = "Joining...";
+                
+                await updateDoc(roomRef, {
+                    p2: user.uid,
+                    p2Char: myCharIdx,
+                    status: 'ready'
+                });
+                listenToGame(code);
+            } else {
+                document.getElementById('lobby-status').innerText = "Room is full or playing.";
+            }
         } else {
-            document.getElementById('lobby-status').innerText = "Room invalid or full.";
+            document.getElementById('lobby-status').innerText = "Room invalid.";
         }
     };
 
     window.findQuickMatch = async () => {
+        playSound('click');
         if(!user) return;
         document.getElementById('lobby-status').innerText = "Searching...";
         
@@ -390,9 +482,14 @@
         
         try {
             const querySnapshot = await getDocs(q);
-            if(!querySnapshot.empty) {
-                const docSnap = querySnapshot.docs[0];
-                roomId = docSnap.id;
+            let foundRoom = null;
+            
+            querySnapshot.forEach(doc => {
+                if(doc.data().p1 !== user.uid) foundRoom = doc;
+            });
+
+            if(foundRoom) {
+                roomId = foundRoom.id;
                 isHost = false;
                 const roomRef = doc(db, 'games', roomId);
                 await updateDoc(roomRef, {
@@ -422,8 +519,8 @@
         const lobbyUnsub = onSnapshot(roomRef, (snap) => {
             const data = snap.data();
             if(data && data.status === 'ready') {
-                lobbyUnsub(); // Stop listening to lobby updates
-                oppCharIdx = data.p2Char;
+                lobbyUnsub(); 
+                oppCharIdx = data.p2Char; 
                 startGameMultiplayer(true, data.p1Char, data.p2Char);
                 setupGameplayListener(code);
             }
@@ -435,7 +532,7 @@
         const roomRef = doc(db, 'games', code);
         getDoc(roomRef).then(snap => {
             const data = snap.data();
-            oppCharIdx = data.p1Char;
+            oppCharIdx = data.p1Char; 
             startGameMultiplayer(false, data.p1Char, data.p2Char);
             setupGameplayListener(code);
         });
@@ -444,7 +541,17 @@
     function setupGameplayListener(code) {
         const roomRef = doc(db, 'games', code);
         gameUnsubscribe = onSnapshot(roomRef, (snap) => {
+            if(!snap.exists()) {
+                // Room deleted (Host left)
+                announce("OPPONENT LEFT", "#f00");
+                setTimeout(backToMain, 3000);
+                return;
+            }
             const update = snap.data();
+            if(update.status === 'abandoned') {
+                announce("OPPONENT LEFT", "#f00");
+                setTimeout(backToMain, 3000);
+            }
             if(update && update.lastAction) handleRemoteUpdate(update);
         });
     }
@@ -459,6 +566,7 @@
         setupGameUI(p1, p2);
         currentState = STATE.P1_AIM;
         startTurnLocal();
+        resizeGame();
         requestAnimationFrame(gameLoop);
     }
 
@@ -472,6 +580,7 @@
         p2.facing = -1;
 
         setupGameUI(p1, p2);
+        resizeGame();
         
         if(isHost) {
             isMyTurn = true;
@@ -514,10 +623,12 @@
             document.getElementById('needle').style.left = meterVal + "%";
         }
 
+        // CPU LOGIC 
         if(!isMultiplayer && currentState === STATE.P2_AIM) {
             if(!p2.aiTimer) p2.aiTimer = 1.0 + Math.random();
             p2.aiTimer -= dt;
             if(p2.aiTimer <= 0) {
+                p2.aiTimer = 9999; 
                 let roll = Math.random();
                 if(roll > 0.7) meterVal = 50; else if (roll > 0.3) meterVal = 35; else meterVal = 10; 
                 resolveSlapLocal(p2, p1);
@@ -554,8 +665,12 @@
     }
 
     function resolveSlapLocal(atk, def) {
+        playSound('click');
         hideMeter();
         meterActive = false;
+        if(atk === p2) currentState = STATE.P2_SLAP; 
+        else currentState = STATE.P1_SLAP;
+
         const res = calculateResult(meterVal);
         performSlapSequence(atk, def, res.mult, res.qual, () => {
             if(def.hp > 0) {
@@ -571,6 +686,7 @@
     }
 
     async function commitSlapMultiplayer() {
+        playSound('click');
         meterActive = false;
         hideMeter();
         isMyTurn = false;
@@ -622,7 +738,11 @@
         setTimeout(() => {
             atk.state = 'SLAP';
             atk.animTimer = 0;
-            setTimeout(() => applyHit(atk, def, mult, qual), 100); 
+            // Trigger sound on impact
+            setTimeout(() => {
+                playSound(qual === 2 ? 'crit' : 'slap');
+                applyHit(atk, def, mult, qual);
+            }, 100); 
             setTimeout(() => {
                 atk.state = 'IDLE';
                 if(def.hp > 0) { def.state = 'IDLE'; onComplete(); }
@@ -740,7 +860,6 @@
         document.getElementById('char-stats').innerText = `${CHARS[idx].name} // PWR:${CHARS[idx].pwr} HP:${CHARS[idx].hp}`;
     }
 
-    // --- ART DRAWING HELPERS ---
     function drawLimb(ctx, x, y, w, h, color, angle) {
         ctx.save(); ctx.translate(x, y); ctx.rotate(angle);
         let grad = ctx.createLinearGradient(-w/2, 0, w/2, 0);
@@ -772,6 +891,14 @@
         ctx.save();
         ctx.translate((Math.random()-0.5)*cameraShake, (Math.random()-0.5)*cameraShake);
         
+        // Crowd
+        ctx.fillStyle = "#222";
+        for(let i=0; i<30; i++) {
+            let cx = (i * 30) % 800;
+            let cy = 550 + Math.sin(i + Date.now()*0.005) * 10;
+            ctx.beginPath(); ctx.arc(cx, cy, 15, 0, Math.PI*2); ctx.fill();
+        }
+
         ctx.fillStyle = "#222"; ctx.fillRect(300, 400, 200, 200); 
         ctx.fillStyle = "#444"; ctx.beginPath(); ctx.ellipse(400, 400, 120, 40, 0, 0, Math.PI*2); ctx.fill();
         ctx.fillStyle = "#111"; ctx.beginPath(); ctx.ellipse(400, 400, 100, 30, 0, 0, Math.PI*2); ctx.fill();
